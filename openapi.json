@@ -1,0 +1,148 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "FastAPI",
+      "version": "0.1.0"
+    },
+    "paths": {
+      "/uploadfile/": {
+        "post": {
+          "summary": "Upload File",
+          "operationId": "upload_file_uploadfile__post",
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/Body_upload_file_uploadfile__post"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UploadFileResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request - Wrong file extension",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Body_upload_file_uploadfile__post": {
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "string",
+              "format": "binary",
+              "title": "File"
+            }
+          },
+          "required": ["file"],
+          "title": "Body_upload_file_uploadfile__post"
+        },
+        "UploadFileResponse": {
+          "type": "object",
+          "properties": {
+            "dialogue": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/DialogueItem"
+              }
+            }
+          },
+          "title": "UploadFileResponse",
+          "description": "The response containing the transcribed dialogue with speaker information."
+        },
+        "DialogueItem": {
+          "type": "object",
+          "properties": {
+            "speaker": {
+              "type": "string",
+              "description": "The identifier for the speaker."
+            },
+            "text": {
+              "type": "string",
+              "description": "The transcribed text spoken by the speaker."
+            },
+            "duration": {
+              "type": "string",
+              "description": "The duration of the speech segment in hh:mm:ss format."
+            }
+          },
+          "title": "DialogueItem",
+          "description": "An item representing a piece of dialogue, including speaker, text, and duration."
+        },
+        "HTTPValidationError": {
+          "type": "object",
+          "properties": {
+            "detail": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ValidationError"
+              },
+              "title": "Detail"
+            }
+          },
+          "title": "HTTPValidationError"
+        },
+        "ValidationError": {
+          "type": "object",
+          "properties": {
+            "loc": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
+              },
+              "title": "Location"
+            },
+            "msg": {
+              "type": "string",
+              "title": "Message"
+            },
+            "type": {
+              "type": "string",
+              "title": "Error Type"
+            }
+          },
+          "required": ["loc", "msg", "type"],
+          "title": "ValidationError"
+        }
+      }
+    }
+  }
+  
