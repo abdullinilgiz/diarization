@@ -2,11 +2,11 @@ import os
 import shutil
 from pathlib import Path
 
-from pydub import AudioSegment
-from pyannote.audio import Pipeline
 import whisper
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
+from pyannote.audio import Pipeline
+from pydub import AudioSegment
 
 
 BASE_DIR = Path(__file__).resolve().parent
